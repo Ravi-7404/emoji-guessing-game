@@ -7,11 +7,9 @@ function checkAnswer(correctAnswer, nextPage) {
 
     if (normalizedUserAnswer === normalizedCorrectAnswer) {
         score++;
-        alert('Correct Answer! Your score is now: ' + score);
-    } else {
-        alert('Incorrect Answer! Your score remains: ' + score);
     }
-
+    
+    // No alert here
     localStorage.setItem('score', score);
     window.location.href = nextPage;
     return false;
