@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Score</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen text-gray-800">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-4xl font-bold mb-4 text-center">Thank You!</h1>
+        <p class="text-2xl text-center">Your Score is: <span id="score" class="font-bold text-pink-500"></span></p>
+        
+        <div class="mt-6">
+            <h2 class="text-3xl font-bold mb-2 text-center">Your Attempted Answers</h2>
+            <ul id="answersList" class="list-disc list-inside text-lg">
+                <!-- Answers will be dynamically added here -->
+            </ul>
+        </div>
+
+        <button onclick="resetScoreAndPlayAgain()" class="mt-6 px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600">Play Again</button>
+    </div>
+    
+    <script>
+        document.getElementById('score').innerText = localStorage.getItem('score') || 0;
+        const attemptedAnswers = JSON.parse(localStorage.getItem('attemptedAnswers')) || [];
+        const correctAnswers = [
+            { question: "Question 1: 🪨 + ⭐ =", answer: "rockstar" },
+            { question: "Question 2: 🏃 + 🍔 =", answer: "fast food" },
+            { question: "Question 3: 🥵 + 🐕 =", answer: "hot dog" },
+            { question: "Question 4: 🔔 + 🏋️‍♂️ =", answer: "belgium" },
+            { question: "Question 5: 🦠 + 💰 =", answer: "germany" }
+        ];
+
+        const answersList = document.getElementById('answersList');
+        attemptedAnswers.forEach(attempt => {
+            const correctAnswer = correctAnswers[attempt.questionIndex];
+            if (correctAnswer) {
+                const listItem = document.createElement('li');
+                listItem.className = "mb-1";
+                listItem.innerHTML = `${correctAnswer.question} <strong>${attempt.answer}</strong> (Correct: <strong>${correctAnswer.answer}</strong>)`;
+                answersList.appendChild(listItem);
+            }
+        });
+
+        function resetScoreAndPlayAgain() {
+            localStorage.setItem('score', 0);
+            localStorage.removeItem('attemptedAnswers');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
